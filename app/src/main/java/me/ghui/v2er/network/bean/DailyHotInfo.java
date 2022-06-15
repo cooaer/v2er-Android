@@ -1,12 +1,15 @@
 package me.ghui.v2er.network.bean;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 
-import me.ghui.v2er.util.Check;
 import me.ghui.v2er.util.AvatarUtils;
+import me.ghui.v2er.util.Check;
 import me.ghui.v2er.util.DateUtils;
 
 /**
@@ -14,6 +17,14 @@ import me.ghui.v2er.util.DateUtils;
  */
 
 public class DailyHotInfo extends ArrayList<DailyHotInfo.Item> implements IBase, Serializable {
+
+    public DailyHotInfo() {
+    }
+
+    public DailyHotInfo(@NonNull Collection<? extends Item> c) {
+        super(c);
+    }
+
     private String mResponseBody;
 
     @Override
@@ -97,12 +108,21 @@ public class DailyHotInfo extends ArrayList<DailyHotInfo.Item> implements IBase,
             this.replies = replies;
         }
 
+        private String timeText;
+
         public String getTime() {
+            if (timeText != null && !timeText.isEmpty()) {
+                return timeText;
+            }
             return DateUtils.parseDate(time);
         }
 
         public void setTime(long time) {
             this.time = time;
+        }
+
+        public void setTime(String time) {
+            this.timeText = time;
         }
 
         public Member getMember() {
